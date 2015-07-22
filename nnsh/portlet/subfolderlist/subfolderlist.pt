@@ -1,20 +1,19 @@
 <dl class="portlet portletSubFolderList"
-    i18n:domain="nnsh.portlet.subfolderlist">
+    i18n:domain="nnsh.portlet.subfolderlist"
+    tal:define="folderListing view/data/getFolder">
 
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
-        Header
+            <tal:title replace="view/data/title" />
         <span class="portletTopRight"></span>
     </dt>
 
-    <dd class="portletItem odd">
-        Body text
-    </dd>
 
-    <dd class="portletFooter">
-        <span class="portletBottomLeft"></span>
-        Footer
-        <span class="portletBottomRight"></span>
-    </dd>
-
+    <tal:repeat repeat="item folderListing">
+<!--        <dd class="portletItem" tal:condition="python:item.Type() in ['Folder', 'SubFolder'] and item.exclude_from_nav == False"> -->
+        <dd class="portletItem" tal:condition="python:item.exclude_from_nav == False">
+           <a tal:attributes="href item/absolute_url" tal:content="item/Title"> Body text
+           </a>
+        </dd>
+    </tal:repeat>
 </dl>

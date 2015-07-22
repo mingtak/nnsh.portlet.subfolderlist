@@ -12,7 +12,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 # TODO: If you require i18n translation for any of your schema fields below,
 # uncomment the following to import your package MessageFactory
-#from nnsh.portlet.subfolderlist import SubFolderListMessageFactory as _
+from nnsh.portlet.subfolderlist import SubFolderListMessageFactory as _
 
 
 class ISubFolderList(IPortletDataProvider):
@@ -53,12 +53,19 @@ class Assignment(base.Assignment):
     def __init__(self):
         pass
 
+    def getFolder(self):
+        folder = self.context
+        while folder.Type() not in ['Folder', 'Plone Site']:
+            folder = folder.getParentNode()
+#        import pdb; pdb.set_trace()
+        return folder.getChildNodes()
+
     @property
     def title(self):
         """This property is used to give the title of the portlet in the
         "manage portlets" screen.
         """
-        return "Sub folder list"
+        return _(u"Sub folder list")
 
 
 class Renderer(base.Renderer):
